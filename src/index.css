@@ -12,3 +12,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.title{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.content {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+.author {
+  font-style: italic;
+  margin-left: 2vw;
+}
+
+.content,.author,.title {
+  text-align:center;
+}
+
+
+.c {
+  position: absulute;
+  will-change: transform, opacity;
+}
+
+.front,
+.back{
+  background-size: cover;
+}
+

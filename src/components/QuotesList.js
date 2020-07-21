@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
-// import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
+import {useSpring, animated as a} from 'react-spring';
 
 function QuotesList(){
   const [apiCall, setApiCall] = useState([])
-  // const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-
-  // constloadMoreQuote = () => {
-  //   setPage(page+1);
-  // }
-
+  const [flipped, set] = useState(false)
+  const {transform, opacity} = useSpring ({
+    opacity: flipped ? 1 : 0,
+    transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
+    config: {mass: 5, tension: 500, friction: 80}
+  })  
+  
   useEffect(()=>{
-    fetch('https://boiling-brook-46170.herokuapp.com/quotes/5', {
+    fetch('https://boiling-brook-46170.herokuapp.com/quotes/', {
       method: "GET" })
       .then(res => res.json())
       .then(response => {
@@ -24,51 +24,27 @@ function QuotesList(){
     
   return (
     <div>
-      <h1>Quotes Api is loading.</h1>
+      <h1 className='title'> Famous quotes from history</h1>
       {isLoading && <p>Quotes are being loaded</p>}
 
-      {apiCall.author}
+      {apiCall.map((c, index) => (
+        <div key={index} onClick ={() => set(state => !state)}>
+          <a.div className='c back' style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>{c.content}</a.div>
+          <a.div className='c front' style={{ opacity, tansform: transform.interpolate(t => `${t} rotateX(180deg)`) }}>{c.author}</a.div>
+            {/* <p className='content'>""</p>
+            <p className='author'>- .</p> */}
+            
+          </div>
+           ))}
+               
+      
     
     </div>
   );
 
 }
 export default QuotesList;
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
   // const mapStateToProps = state => {
