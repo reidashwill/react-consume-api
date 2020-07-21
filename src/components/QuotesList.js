@@ -1,55 +1,83 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { makeApiCall } from '../actions/index';
-import { makeApiCall2 } from '../actions/index'
+import React, {useState, useEffect} from 'react';
+// import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 
-class QuotesList extends React.Component {
+function QuotesList(){
+  const [apiCall, setApiCall] = useState([])
+  // const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(makeApiCall());
-    dispatch(makeApiCall2());
-  }
+  // constloadMoreQuote = () => {
+  //   setPage(page+1);
+  // }
 
-  render() {
-    const { error, isLoading, quotes, quote } = this.props;
-    console.log(quotes)
-    if (error) {
-      return <React.Fragment>ERROR: {error.message}</React.Fragment>;
-    } else if (isLoading) {
-      return <React.Fragment>Loading...</React.Fragment>;
-    } else {
-      return (
-        <React.Fragment>
-          <h1>SINGLE QUOTE TEST</h1>
-        
-          <p>{quote.author}</p>
-          <p>{quote.content}</p>
-          
-          <h1>Quotes</h1>
-          <ul>
-            {quotes.map((quote,index) =>
-               <li key={index}>
-                <h3>{quote.author}</h3>
-                <p>{quote.content}</p>
-              </li>
-            )}  
-          </ul>
-        </React.Fragment>
-      );
-    }
-  }
+  useEffect(()=>{
+    fetch('https://boiling-brook-46170.herokuapp.com/quotes/5', {
+      method: "GET" })
+      .then(res => res.json())
+      .then(response => {
+        setApiCall(response);
+        setIsLoading(false);
+      })
+      .catch(error => console.log(error));
+  })
+    
+  return (
+    <div>
+      <h1>Quotes Api is loading.</h1>
+      {isLoading && <p>Quotes are being loaded</p>}
+
+      {apiCall.author}
+    
+    </div>
+  );
+
+}
+export default QuotesList;
   
 
-}
 
-const mapStateToProps = state => {
-  return {
-    quotes: state.quotes,
-    quote: state.quote,
-    isLoading: state.isLoading,
-    error: state.error
-  }
-}
 
-export default connect(mapStateToProps)(QuotesList);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const mapStateToProps = state => {
+//   return {
+//     quotes: state.quotes,
+//     quote: state.quote,
+//     isLoading: state.isLoading,
+//     error: state.error
+//   }
+// }
+
+// export default connect(mapStateToProps)(QuotesList);
