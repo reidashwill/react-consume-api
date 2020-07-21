@@ -24,18 +24,22 @@ function QuotesList(){
     
   return (
     <div>
+      
       <h1 className='title'> Famous quotes from history</h1>
       {isLoading && <p>Quotes are being loaded</p>}
-
+      <div className = 'flexContainer'>
+        <a.div onClick ={() => set(state => !state)} className='c front' style={{ opacity, tansform: transform.interpolate(t => `${t} rotateX(180deg)`) }}><img href='https://cdn.cnn.com/cnnnext/dam/assets/200110111717-10-mlk-jr-destinations-photos.jpg'></img></a.div>
+      </div>
       {apiCall.map((c, index) => (
         <div key={index} onClick ={() => set(state => !state)}>
-          <a.div className='c back' style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>{c.content}</a.div>
-          <a.div className='c front' style={{ opacity, tansform: transform.interpolate(t => `${t} rotateX(180deg)`) }}>{c.author}</a.div>
+          <a.div className='c back' style={{ opacity: opacity.interpolate(o => 1 - o), transform }}><span className='content'>{c.content}</span><br/><span className='author'>- {c.author}.</span> </a.div>
             {/* <p className='content'>""</p>
             <p className='author'>- .</p> */}
             
           </div>
            ))}
+           
+           
                
       
     
